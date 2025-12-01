@@ -20,3 +20,25 @@
   border-radius: 55%;
   width: 73px;
 }
+
+.inline-list {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+}
+
+.inline-list li {
+  margin-right: 10px;
+}
+
+.item1 {
+  color: red;
+}
+
+.item2 {
+  color: green;
+}
+
+.item3 {
+  color: blue;
+}

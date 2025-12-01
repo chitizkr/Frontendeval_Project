@@ -7,17 +7,18 @@ function UndoRedu() {
   const [past, setPast] = useState([]);
   const [present, setPresent] = useState(initialValue);
   const [future, setFuture] = useState([]);
+  const [click, setClick] = useState([]);
 
   function set(data) {
     setPast([...past, present]);
     setPresent((e) => e + data);
+    setClick((e) => [...e, data]);
   }
 
   function undo() {
     if (past.length === 0) return;
     const prev = past[past.length - 1];
     const presentC = past.slice(0, past.length - 1);
-
     setFuture((el) => [present, ...el]);
     setPresent(prev);
     setPast(presentC);
@@ -41,7 +42,7 @@ function UndoRedu() {
         <button className="btn" onClick={undo}>
           Undo
         </button>
-        <button className="btn" onClick={redo}>
+        <button className="btn" onClick={redo} disabled={future.length === 1}>
           Redo
         </button>
         <button
@@ -50,6 +51,7 @@ function UndoRedu() {
             setPast([]);
             setPresent(initialValue);
             setFuture([]);
+            setClick([]);
           }}
         >
           Reset
@@ -76,8 +78,21 @@ function UndoRedu() {
           +100
         </button>
       </div>
-      <div>
+      <div className="history">
         <h3>History</h3>
+        <ul className="inline-list">
+          {click.map((e, id) => (
+            <li key={id} className="item-1">
+              {e}
+            </li>
+          ))}
+          {past.map((e, id) => (
+            <li key={id} className="item-2">
+              {e}
+            </li>
+          ))}
+          {present && <li className="item-present">{present}</li>}
+        </ul>
       </div>
     </div>
   );
